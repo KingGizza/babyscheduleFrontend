@@ -1,0 +1,107 @@
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" (click)="findAll()" type="button" id="dateDropdown"
+    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Kies dag
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let daydescription of descriptionList">
+        <button (click)="findDescription(daydescription.id)" class="dropdown-item" type="button"><a
+            routerLink="/detail/{{daydescription.id}}">{{daydescription.date}}</a></button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="daydescription.date; else notShow">
+  <h1>{{daydescription.date}}</h1>
+  <form>
+    <div class="form-group">
+      <label for="description">Dagomschrijving</label>
+      <textarea class="form-control" [(ngModel)]="daydescription.description" name="description" rows="5"></textarea>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-10">
+        <button (click)="save()" class="btn btn-primary">Opslaan</button>
+      </div>
+    </div>
+  </form>
+  <h3>Dutjes</h3>
+  <table class="table table-hover">
+    <thead>
+      <th scope="col">Start</th>
+      <th scope ="col"> Einde </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let nap of daydescription.naps">
+        <td>{{nap.napId}}</td>
+        <td>{{nap.start}}</td>
+        <td>{{nap.end}}</td>
+        <td><button class = "btn btn-outline-primary" data-toggle="modal" data-target="#changeNapModal" (click)="setNapId(nap.napId)">Wijzigen</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNapModal">
+      Voeg een dutje toe
+    </button>
+</div>
+
+
+<div class="modal fade" id="addNapModal" tabindex="-1" role="dialog" aria-labelledby="addNapModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNapModalLabel">Dutje toevoegen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label for="start">Start dutje</label>
+            <input type="time" [(ngModel)]="this.napStart" class="form-control" name="start">
+            <label for="end">Einde dutje</label>
+            <input type="time" [(ngModel)]="this.napEnd" class="form-control" name="end">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+        <button type="button" class="btn btn-primary" (click)=addNap() data-dismiss="modal">Opslaan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="changeNapModal" tabindex="-1" role="dialog" aria-labelledby="changeNapModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeNapModalLabel">Dutje toevoegen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label for="start">Start dutje</label>
+            <input type="time" [(ngModel)]="this.napStart" class="form-control" name="start">
+            <label for="end">Einde dutje</label>
+            <input type="time" [(ngModel)]="this.napEnd" class="form-control" name="end">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+        <button type="button" class="btn btn-primary" (click)=changeNap() data-dismiss="modal">Opslaan</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #notShow>
+  <div class="form-group">
+    <div class="col-sm-10">
+      <button routerLink="/newDay" class="btn btn-primary btn-lg btn-block">Nieuwe dag toevoegen</button>
+    </div>
+  </div>
+</ng-template>
