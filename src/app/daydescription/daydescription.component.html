@@ -1,29 +1,12 @@
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" (click)="findAll()" type="button" id="dateDropdown"
-    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Kies dag
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let daydescription of descriptionList">
-        <button (click)="findDescription(daydescription.id)" class="dropdown-item" type="button"><a
-            routerLink="/detail/{{daydescription.id}}">{{daydescription.date}}</a></button>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div *ngIf="daydescription.date; else notShow">
+<div class="body" *ngIf="daydescription.date; else notShow">
   <h1>{{daydescription.date}}</h1>
   <form>
     <div class="form-group">
       <label for="description">Dagomschrijving</label>
-      <textarea class="form-control" [(ngModel)]="daydescription.description" name="description" rows="5"></textarea>
+      <textarea readonly class="form-control" [(ngModel)]="daydescription.description" name="description" rows="5">{{daydescription.description}}</textarea>
     </div>
     <div class="form-group">
-      <div class="col-sm-10">
-        <button (click)="save()" class="btn btn-primary">Opslaan</button>
-      </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addDescriptionModal">Wijzigen</button>
     </div>
   </form>
   <h3>Dutjes</h3>
@@ -34,7 +17,6 @@
     </thead>
     <tbody>
       <tr *ngFor="let nap of daydescription.naps">
-        <td>{{nap.napId}}</td>
         <td>{{nap.start}}</td>
         <td>{{nap.end}}</td>
         <td><button class = "btn btn-outline-primary" data-toggle="modal" data-target="#changeNapModal" (click)="setNapId(nap.napId)">Wijzigen</button></td>
@@ -94,6 +76,32 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
         <button type="button" class="btn btn-primary" (click)=changeNap() data-dismiss="modal">Opslaan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addDescriptionModal" tabindex="-1" role="dialog" aria-labelledby="addDescriptionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDescriptionModalLabel">Hoe was je dag?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form>
+              <div class="form-group">
+                <label for="description">Dagomschrijving</label>
+                <textarea class="form-control" [(ngModel)]="daydescription.description" name="description" rows="5"></textarea>
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+        <button type="button" class="btn btn-primary" (click)=save() data-dismiss="modal">Opslaan</button>
       </div>
     </div>
   </div>

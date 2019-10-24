@@ -7,7 +7,8 @@ import { DaydescriptionComponent } from './daydescription/daydescription.compone
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { NewDayComponent } from './new-day/new-day.component';
-import {RouterModule, Routes} from '@angular/router'
+import {RouterModule, Routes} from '@angular/router';
+import { MenubarComponent } from './menubar/menubar.component'
 const appRoutes: Routes =[
   { path: 'detail/:id', component: DaydescriptionComponent },
   { path: 'detail/', component: DaydescriptionComponent },
@@ -19,7 +20,8 @@ const appRoutes: Routes =[
   declarations: [
     AppComponent,
     DaydescriptionComponent,
-    NewDayComponent
+    NewDayComponent,
+    MenubarComponent
   ],
   imports: [
     RouterModule.forRoot(
